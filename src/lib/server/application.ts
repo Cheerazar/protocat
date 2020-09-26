@@ -4,6 +4,7 @@ import {
   Middleware,
   ServiceImplementation,
   ServiceImplementationExtended,
+  ServiceImplementationExtendedWithGeneric,
   StrictMiddleware,
 } from './call'
 import { stubToType } from '../call-types'
@@ -51,19 +52,19 @@ export class ProtoCat<
   /**
    * Add service stub and its definition
    */
-  public addService<K extends keyof Services>(
-    serviceKey: K,
-    serviceImplementation: ServiceImplementationExtended<Services[K], Extension>
-  ): void;
+  // public addService<K extends keyof Services>(
+  //   serviceKey: K,
+  //   serviceImplementation: ServiceImplementationExtended<Services[K], Extension>
+  // ): void;
 
-  public addService<K extends keyof Services>(
-    serviceKey: K,
-    serviceImplementation: ServiceImplementation<Services[K], Extension>
-  ): void;
+  // public addService<K extends keyof Services>(
+  //   serviceKey: K,
+  //   serviceImplementation: ServiceImplementation<Services[K], Extension>
+  // ): void;
 
-  public addService<K extends keyof Services>(
+  public addService<K extends keyof Services, X extends ServiceImplementationExtended<Services[K], Extension> | ServiceImplementation<Services[K], Extension>>(
     serviceKey: K,
-    serviceImplementation: ServiceImplementationExtended<Services[K], Extension>
+    serviceImplementation: X
   ) {
     const serviceDefinition = this.services[serviceKey]
     for (const methodName in serviceDefinition) {
